@@ -46,7 +46,9 @@ var spinTimeTotal = 0;
 
 var ctx;
 
-document.querySelector(".spin").addEventListener("click", startspin);
+Array.from(document.querySelectorAll(".spin")).forEach((e) => {
+  e.addEventListener("click", startspin);
+});
 
 function byte2Hex(n) {
   var nybHexString = "0123456789ABCDEF";
