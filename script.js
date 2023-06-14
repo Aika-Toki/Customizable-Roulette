@@ -26,7 +26,7 @@ let max = query.hasOwnProperty("max") ? Number(query["max"]) : 10;
 let style = query.hasOwnProperty("style")
   ? styles[Number(query["style"])]
   : styles[0];
-let wheelFont = `bold 12px '${style}'`;
+let wheelFont = `16px '${style}'`;
 let CentreFont = `bold 30px '${style}'`;
 let options = [];
 for (let i = min; i <= max; i++) {
