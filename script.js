@@ -1,6 +1,3 @@
-let min = 1,
-  max = 10,
-  style = 0;
 const styles = [
   "Roboto",
   "Bagel Fat One",
@@ -14,7 +11,7 @@ const styles = [
 
 function searchQuery() {
   let query = {};
-  let search = Array.from(
+  Array.from(
     location.search.slice(1, location.search.length).split("&")
   ).forEach((e) => {
     let param = e.split("=");
@@ -24,11 +21,11 @@ function searchQuery() {
 }
 
 let query = searchQuery();
-min = query.hasOwnProperty("min") ? Number(query["min"]) : min;
-max = query.hasOwnProperty("max") ? Number(query["max"]) : max;
-style = query.hasOwnProperty("style")
+let min = query.hasOwnProperty("min") ? Number(query["min"]) : 1;
+let max = query.hasOwnProperty("max") ? Number(query["max"]) : 10;
+let style = query.hasOwnProperty("style")
   ? styles[Number(query["style"])]
-  : styles[style];
+  : styles[0];
 let wheelFont = `bold 12px '${style}'`;
 let CentreFont = `bold 30px '${style}'`;
 let options = [];
@@ -143,16 +140,16 @@ function drawRouletteWheel() {
 function spin() {
   spinAngleStart = Math.random() * 10 + 10;
   spinTime = 0;
-  spinTimeTotal = Math.random() * 3 + 4 * 1000;
+  spinTimeTotal = Math.random() * 5 + 4 * 1000;
   rotateWheel();
 }
 function startspin() {
   spin();
-  spin();
+  // spin();
 }
 
 function rotateWheel() {
-  spinTime += 30;
+  spinTime += 10;
   if (spinTime >= spinTimeTotal) {
     stopRotateWheel();
     return;
@@ -161,7 +158,7 @@ function rotateWheel() {
     spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
   startAngle += (spinAngle * Math.PI) / 180;
   drawRouletteWheel();
-  spinTimeout = setTimeout("rotateWheel()", 30);
+  spinTimeout = setTimeout("rotateWheel()", 10);
 }
 
 function stopRotateWheel() {
