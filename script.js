@@ -145,6 +145,9 @@ function spin() {
 }
 function startspin() {
   spin();
+  Array.from(document.querySelectorAll(".spin")).forEach((e) => {
+    e.removeEventListener("click", startspin);
+  });
   // spin();
 }
 
@@ -172,6 +175,9 @@ function stopRotateWheel() {
   var text = options[index];
   ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
   ctx.restore();
+  Array.from(document.querySelectorAll(".spin")).forEach((e) => {
+    e.addEventListener("click", startspin);
+  });
 }
 
 function easeOut(t, b, c, d) {
