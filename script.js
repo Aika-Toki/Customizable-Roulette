@@ -3,7 +3,7 @@ let min = 1,
   style = 0;
 const styles = [
   "Roboto",
-  "Moirai One",
+  "Bagel Fat One",
   "Yuji Hentaigana Akebono",
   "PT Serif",
   "Anton",
