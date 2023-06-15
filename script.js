@@ -48,7 +48,7 @@ let radius = query.hasOwnProperty("radius") ? Number(query["radius"]) : 8;
 let wheelFont = `16px '${font}'`;
 let CentreFont = `bold 30px '${font}'`;
 property("--background", theme.background);
-property("--radius", theme.radius);
+property("--radius", radius);
 let options = [];
 for (let i = min; i <= max; i++) {
   options.push(i);
