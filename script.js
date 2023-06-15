@@ -11,13 +11,13 @@ const fonts = [
 
 const themes = {
   light: {
-    background: "#FAFBFC",
+    background: "#FAFBFC88",
     color: "#222626",
     lightness: 80,
     saturate: 70,
   },
   dark: {
-    background: "#222626",
+    background: "#22262688",
     color: "#FAFBFC",
     lightness: 40,
     saturate: 80,
