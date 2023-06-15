@@ -237,6 +237,10 @@ function initCanvas() {
   Array.from(document.querySelectorAll(".spin")).forEach((e) => {
     e.addEventListener("click", startspin);
   });
+  drawRouletteWheel();
+  setTimeout(() => {
+    drawRouletteWheel();
+  }, 10);
 }
 
 const hslToRgb16 = (hue, saturation, lightness) => {
@@ -306,6 +310,6 @@ const hslToRgb16 = (hue, saturation, lightness) => {
 initCanvas();
 // drawRouletteWheel();
 
-setTimeout(() => {
-  drawRouletteWheel();
-}, 300);
+// setTimeout(() => {
+//   drawRouletteWheel();
+// }, 300);
