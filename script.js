@@ -52,10 +52,14 @@ let theme = query.hasOwnProperty("theme")
   ? themes[query.theme]
   : themes["light"];
 let radius = query.hasOwnProperty("radius") ? query["radius"] + "px" : "8px";
+let btnvisible = query.hasOwnProperty("btn")
+  ? ["none", "block"][Number(query["btn"])]
+  : "block";
 let wheelFont = `${size * 0.032}px '${font}'`;
 let CentreFont = `bold ${size * 0.06}px '${font}'`;
 property("--background", theme.background);
 property("--radius", radius);
+property("--btn", btnvisible);
 let options = [];
 for (let i = min; i <= max; i++) {
   options.push(i);
