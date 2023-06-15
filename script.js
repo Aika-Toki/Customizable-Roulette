@@ -240,7 +240,7 @@ function initCanvas() {
   drawRouletteWheel();
   setTimeout(() => {
     drawRouletteWheel();
-  }, 10);
+  }, 800);
 }
 
 const hslToRgb16 = (hue, saturation, lightness) => {
@@ -308,8 +308,3 @@ const hslToRgb16 = (hue, saturation, lightness) => {
 };
 
 initCanvas();
-// drawRouletteWheel();
-
-// setTimeout(() => {
-//   drawRouletteWheel();
-// }, 300);
