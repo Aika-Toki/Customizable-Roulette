@@ -20,7 +20,7 @@ const themes = {
     background: "#22262688",
     color: "#FAFBFC",
     lightness: 40,
-    saturate: 80,
+    saturate: 60,
   },
 };
 
