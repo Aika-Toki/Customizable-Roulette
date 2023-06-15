@@ -11,8 +11,8 @@ const fonts = [
 
 let size =
   window.innerHeight >= window.innerWidth
-    ? window.innerWidth
-    : window.innerHeight - 140;
+    ? window.innerWidth * 0.9
+    : window.innerHeight * 0.9 - 140;
 
 let half = Math.round(size / 2);
 
