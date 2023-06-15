@@ -238,9 +238,7 @@ function initCanvas() {
     e.addEventListener("click", startspin);
   });
   drawRouletteWheel();
-  setTimeout(() => {
-    drawRouletteWheel();
-  }, 800);
+  setTimeout(drawRouletteWheel, 800);
 }
 
 const hslToRgb16 = (hue, saturation, lightness) => {
