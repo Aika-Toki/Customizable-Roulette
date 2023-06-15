@@ -44,7 +44,7 @@ let font = query.hasOwnProperty("font")
 let theme = query.hasOwnProperty("theme")
   ? themes[query.theme]
   : themes["light"];
-let radius = query.hasOwnProperty("radius") ? Number(query["radius"]) : 8;
+let radius = query.hasOwnProperty("radius") ? query["radius"] + "px" : "8px";
 let wheelFont = `16px '${font}'`;
 let CentreFont = `bold 30px '${font}'`;
 property("--background", theme.background);
@@ -69,7 +69,7 @@ Array.from(document.querySelectorAll(".spin")).forEach((e) => {
 });
 
 function property(name, value) {
-  document.querySelector(":root").setProperty(name, value);
+  document.querySelector(":root").style.setProperty(name, value);
 }
 
 function byte2Hex(n) {
