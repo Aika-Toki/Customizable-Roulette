@@ -9,6 +9,13 @@ const fonts = [
   "Press Start 2P",
 ];
 
+let size =
+  window.innerHeight >= window.innerWidth
+    ? window.innerWidth
+    : window.innerHeight - 140;
+
+let half = Math.round(size / 2);
+
 const themes = {
   light: {
     background: "#FAFBFC88",
@@ -45,8 +52,8 @@ let theme = query.hasOwnProperty("theme")
   ? themes[query.theme]
   : themes["light"];
 let radius = query.hasOwnProperty("radius") ? query["radius"] + "px" : "8px";
-let wheelFont = `16px '${font}'`;
-let CentreFont = `bold 30px '${font}'`;
+let wheelFont = `${size * 0.032}px '${font}'`;
+let CentreFont = `bold ${size * 0.06}px '${font}'`;
 property("--background", theme.background);
 property("--radius", radius);
 let options = [];
@@ -108,12 +115,12 @@ function getColor(item, maxitem) {
 function drawRouletteWheel() {
   var canvas = document.getElementById("canvas");
   if (canvas.getContext) {
-    var outsideRadius = 200;
-    var textRadius = 160;
-    var insideRadius = 120;
+    var outsideRadius = size * 0.4;
+    var textRadius = size * 0.32;
+    var insideRadius = size * 0.24;
 
     ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, 500, 500);
+    ctx.clearRect(0, 0, size, size);
 
     ctx.strokeStyle = theme.color;
     ctx.lineWidth = 1;
@@ -126,8 +133,8 @@ function drawRouletteWheel() {
       ctx.fillStyle = getColor(i, options.length);
 
       ctx.beginPath();
-      ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
-      ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
+      ctx.arc(half, half, outsideRadius, angle, angle + arc, false);
+      ctx.arc(half, half, insideRadius, angle + arc, angle, true);
       ctx.stroke();
       ctx.fill();
 
@@ -138,8 +145,8 @@ function drawRouletteWheel() {
       ctx.shadowColor = "rgb(220,220,220)";
       ctx.fillStyle = theme.color;
       ctx.translate(
-        250 + Math.cos(angle + arc / 2) * textRadius,
-        250 + Math.sin(angle + arc / 2) * textRadius
+        half + Math.cos(angle + arc / 2) * textRadius,
+        half + Math.sin(angle + arc / 2) * textRadius
       );
       ctx.rotate(angle + arc / 2 + Math.PI / 2);
       var text = options[i];
@@ -150,14 +157,14 @@ function drawRouletteWheel() {
     //Arrow
     ctx.fillStyle = "gray";
     ctx.beginPath();
-    ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
-    ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
-    ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
-    ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
+    ctx.moveTo(half - 4, half - (outsideRadius + 5));
+    ctx.lineTo(half + 4, half - (outsideRadius + 5));
+    ctx.lineTo(half + 4, half - (outsideRadius - 5));
+    ctx.lineTo(half + 9, half - (outsideRadius - 5));
+    ctx.lineTo(half + 0, half - (outsideRadius - 13));
+    ctx.lineTo(half - 9, half - (outsideRadius - 5));
+    ctx.lineTo(half - 4, half - (outsideRadius - 5));
+    ctx.lineTo(half - 4, half - (outsideRadius + 5));
     ctx.fill();
   }
 }
@@ -198,7 +205,7 @@ function stopRotateWheel() {
   ctx.font = CentreFont;
   ctx.fillStyle = theme.color;
   var text = options[index];
-  ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
+  ctx.fillText(text, half - ctx.measureText(text).width / 2, half + 10);
   ctx.restore();
   Array.from(document.querySelectorAll(".spin")).forEach((e) => {
     e.addEventListener("click", startspin);
@@ -209,6 +216,23 @@ function easeOut(t, b, c, d) {
   var ts = (t /= d) * t;
   var tc = ts * t;
   return b + c * (tc + -3 * ts + 3 * t);
+}
+
+function initCanvas() {
+  if (document.querySelector("canvas"))
+    document.querySelector("canvas").remove();
+  Array.from(document.querySelectorAll(".spin")).forEach((e) => {
+    e.removeEventListener("click", startspin);
+  });
+  let canvasel = document.createElement("canvas");
+  canvasel.classList.add("spin");
+  canvasel.id = "canvas";
+  canvasel.setAttribute("width", size);
+  canvasel.setAttribute("height", size);
+  document.querySelector("input.spin").before(canvasel);
+  Array.from(document.querySelectorAll(".spin")).forEach((e) => {
+    e.addEventListener("click", startspin);
+  });
 }
 
 const hslToRgb16 = (hue, saturation, lightness) => {
@@ -275,7 +299,8 @@ const hslToRgb16 = (hue, saturation, lightness) => {
   return result;
 };
 
-drawRouletteWheel();
+initCanvas();
+// drawRouletteWheel();
 
 setTimeout(() => {
   drawRouletteWheel();
