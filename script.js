@@ -106,7 +106,7 @@ function getColor(item, maxitem) {
   blue = Math.sin(frequency * item + 4 + phase) * width + center;
 
   let hr = hslToRgb16((item / maxitem) * 360, theme.saturate, theme.lightness);
-  console.log(hr);
+  // console.log(hr);
   return (
     "#" +
     hr.red.padStart(2, "0") +
