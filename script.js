@@ -1,4 +1,4 @@
-const styles = [
+const fonts = [
   "Roboto",
   "Bagel Fat One",
   "Yuji Hentaigana Akebono",
@@ -8,6 +8,21 @@ const styles = [
   "Orbitron",
   "Press Start 2P",
 ];
+
+const themes = {
+  light: {
+    background: "#FAFBFC",
+    color: "#222626",
+    lightness: 80,
+    saturate: 70,
+  },
+  dark: {
+    background: "#222626",
+    color: "#FAFBFC",
+    lightness: 40,
+    saturate: 80,
+  },
+};
 
 function searchQuery() {
   let query = {};
@@ -23,11 +38,17 @@ function searchQuery() {
 let query = searchQuery();
 let min = query.hasOwnProperty("min") ? Number(query["min"]) : 1;
 let max = query.hasOwnProperty("max") ? Number(query["max"]) : 10;
-let style = query.hasOwnProperty("style")
-  ? styles[Number(query["style"])]
-  : styles[0];
-let wheelFont = `16px '${style}'`;
-let CentreFont = `bold 30px '${style}'`;
+let font = query.hasOwnProperty("font")
+  ? fonts[Number(query["font"])]
+  : fonts[0];
+let theme = query.hasOwnProperty("theme")
+  ? themes[query.theme]
+  : themes["light"];
+let radius = query.hasOwnProperty("radius") ? Number(query["radius"]) : 8;
+let wheelFont = `16px '${font}'`;
+let CentreFont = `bold 30px '${font}'`;
+property("--background", theme.background);
+property("--radius", theme.radius);
 let options = [];
 for (let i = min; i <= max; i++) {
   options.push(i);
@@ -46,6 +67,10 @@ var ctx;
 Array.from(document.querySelectorAll(".spin")).forEach((e) => {
   e.addEventListener("click", startspin);
 });
+
+function property(name, value) {
+  document.querySelector(":root").setProperty(name, value);
+}
 
 function byte2Hex(n) {
   var nybHexString = "0123456789ABCDEF";
@@ -69,7 +94,7 @@ function getColor(item, maxitem) {
   green = Math.sin(frequency * item + 0 + phase) * width + center;
   blue = Math.sin(frequency * item + 4 + phase) * width + center;
 
-  let hr = hslToRgb16((item / maxitem) * 360, 70, 40);
+  let hr = hslToRgb16((item / maxitem) * 360, theme.saturate, theme.lightness);
   console.log(hr);
   return (
     "#" +
@@ -90,7 +115,7 @@ function drawRouletteWheel() {
     ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, 500, 500);
 
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = theme.color;
     ctx.lineWidth = 1;
 
     ctx.font = wheelFont;
@@ -111,7 +136,7 @@ function drawRouletteWheel() {
       ctx.shadowOffsetY = -1;
       ctx.shadowBlur = 0;
       ctx.shadowColor = "rgb(220,220,220)";
-      ctx.fillStyle = "white";
+      ctx.fillStyle = theme.color;
       ctx.translate(
         250 + Math.cos(angle + arc / 2) * textRadius,
         250 + Math.sin(angle + arc / 2) * textRadius
@@ -171,7 +196,7 @@ function stopRotateWheel() {
   var index = Math.floor((360 - (degrees % 360)) / arcd);
   ctx.save();
   ctx.font = CentreFont;
-  ctx.fillStyle = "Black";
+  ctx.fillStyle = theme.color;
   var text = options[index];
   ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
   ctx.restore();

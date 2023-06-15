@@ -30,19 +30,29 @@
 
     <title>Customizable Roulette</title>
   </head>
-  <body style="max-width: 500px; background: #fff8; border-radius: 8px">
-    <canvas
-      id="canvas"
-      width="500"
-      height="500"
-      class="spin"
-    ></canvas>
-    <input
-      type="button"
-      value="スピン"
-      style="width: 100%"
-      class="spin"
-    />
+  <body style="max-width: 500px; background: transparent">
+    <div
+      style="
+        background: var(--background);
+        border-radius: var(--radius);
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+      "
+    >
+      <canvas
+        id="canvas"
+        width="500"
+        height="500"
+        class="spin"
+      ></canvas>
+      <input
+        type="button"
+        value="スピン"
+        style="width: 100%"
+        class="spin"
+      />
+    </div>
     <script src="./script.js"></script>
   </body>
 </html>
